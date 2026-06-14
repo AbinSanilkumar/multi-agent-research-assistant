@@ -1,3 +1,6 @@
-from django.contrib import admin
+# research/admin.py
 
-# Register your models here.
+from django.contrib import admin
+from .models import ResearchSession
+
+admin.site.register(ResearchSession)
