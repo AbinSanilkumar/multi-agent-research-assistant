@@ -1,13 +1,31 @@
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
+from .forms import ResearchForm
+from .models import ResearchSession
+
+
+@login_required
 def home(request):
+    return dashboard(request)
 
-    if request.user.is_authenticated:
 
-        return HttpResponse(
-            f"Welcome {request.user.username}"
-        )
+@login_required
+def dashboard(request):
 
-    return HttpResponse(
-        "Multi-Agent Research Assistant"
+    form = ResearchForm()
+
+    sessions = ResearchSession.objects.filter(
+        user=request.user
+    ).order_by('-created_at')
+
+    context = {
+        'form': form,
+        'sessions': sessions
+    }
+
+    return render(
+        request,
+        'research/dashboard.html',
+        context
     )
