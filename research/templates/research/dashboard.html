@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Research Dashboard
+</h2>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn btn-primary">
+                Create Research Session
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+
+        <h4>
+            Previous Sessions
+        </h4>
+
+        <hr>
+
+        {% for session in sessions %}
+
+            <div class="mb-3">
+
+                <strong>
+                    {{ session.topic }}
+                </strong>
+
+                <br>
+
+                <small>
+                    {{ session.created_at }}
+                </small>
+
+            </div>
+
+        {% empty %}
+
+            <p>
+                No research sessions yet.
+            </p>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

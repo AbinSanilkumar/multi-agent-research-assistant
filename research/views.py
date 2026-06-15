@@ -13,7 +13,22 @@ def home(request):
 @login_required
 def dashboard(request):
 
-    form = ResearchForm()
+    if request.method == 'POST':
+
+        form = ResearchForm(request.POST)
+
+        if form.is_valid():
+
+            ResearchSession.objects.create(
+                user=request.user,
+                topic=form.cleaned_data['topic']
+            )
+
+            return redirect('home')
+
+    else:
+
+        form = ResearchForm()
 
     sessions = ResearchSession.objects.filter(
         user=request.user
