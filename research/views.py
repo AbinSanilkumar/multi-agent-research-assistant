@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from agents.planner import generate_research_plan
+from agents.researcher import generate_research_content
 
 from .forms import ResearchForm
 from .models import ResearchSession
@@ -25,10 +26,16 @@ def dashboard(request):
 
             plan = generate_research_plan(topic)
 
+            research_content = generate_research_content(
+                topic,
+                plan
+            )
+
             ResearchSession.objects.create(
                 user=request.user,
                 topic=topic,
-                plan=plan
+                plan=plan,
+                research_content=research_content
             )
 
             return redirect('home')
