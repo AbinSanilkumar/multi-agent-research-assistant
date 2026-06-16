@@ -39,19 +39,31 @@ Dashboard
 
         {% for session in sessions %}
 
-            <div class="mb-3">
+        <div class="card shadow mb-3">
 
-                <strong>
+            <div class="card-body">
+
+                <h5>
                     {{ session.topic }}
-                </strong>
+                </h5>
 
-                <br>
-
-                <small>
+                <small class="text-muted">
                     {{ session.created_at }}
                 </small>
 
+                <hr>
+
+                <h6>
+                    Generated Research Plan
+                </h6>
+
+                <pre class="bg-light p-3 rounded">
+{{ session.plan }}
+                </pre>
+
             </div>
+
+        </div>
 
         {% empty %}
 
