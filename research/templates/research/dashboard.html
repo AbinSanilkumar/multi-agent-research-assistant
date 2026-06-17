@@ -63,6 +63,17 @@ Dashboard
 
                 <hr>
 
+                {% if not session.research_content %}
+
+                <a href="{% url 'generate_research' session.id %}"
+                   class="btn btn-success btn-sm">
+
+                    Generate Research
+
+                </a>
+
+                {% endif %}
+
                 <h6>
                     Research Content
                 </h6>
