@@ -89,3 +89,23 @@ def generate_research(request, session_id):
             print(f"Gemini Error: {e}")
 
     return redirect('home')
+
+
+@login_required
+def session_detail(request, session_id):
+
+    session = get_object_or_404(
+        ResearchSession,
+        id=session_id,
+        user=request.user
+    )
+
+    context = {
+        'session': session
+    }
+
+    return render(
+        request,
+        'research/session_detail.html',
+        context
+    )

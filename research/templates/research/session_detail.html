@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Research Session
+{% endblock %}
+
+{% block content %}
+
+<h2>
+    {{ session.topic }}
+</h2>
+
+<hr>
+
+<h4>
+    Research Plan
+</h4>
+
+<pre class="bg-light p-3 rounded">
+{{ session.plan }}
+</pre>
+
+<hr>
+
+<h4>
+    Research Content
+</h4>
+
+{% if session.research_content %}
+
+<pre class="bg-light p-3 rounded">
+{{ session.research_content }}
+</pre>
+
+{% else %}
+
+<p>
+    Research content not generated yet.
+</p>
+
+<a href="{% url 'generate_research' session.id %}"
+   class="btn btn-success">
+
+    Generate Research
+
+</a>
+
+{% endif %}
+
+{% endblock %}
