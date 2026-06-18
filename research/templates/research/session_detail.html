@@ -47,4 +47,34 @@ Research Session
 
 {% endif %}
 
+<hr>
+
+<h4>
+    Fact Check
+</h4>
+
+{% if session.fact_check_report %}
+
+<div class="alert alert-success">
+
+    Confidence Score:
+    {{ session.confidence_score }}%
+
+</div>
+
+<pre class="bg-light p-3 rounded">
+{{ session.fact_check_report }}
+</pre>
+
+{% else %}
+
+<a href="{% url 'generate_fact_check' session.id %}"
+   class="btn btn-warning">
+
+    Generate Fact Check
+
+</a>
+
+{% endif %}
+
 {% endblock %}

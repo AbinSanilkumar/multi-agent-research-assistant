@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from agents.planner import generate_research_plan
 from agents.researcher import generate_research_content
+from agents.fact_checker import fact_check_content
 
 from .forms import ResearchForm
 from .models import ResearchSession
@@ -131,6 +132,39 @@ def session_detail(request, session_id):
         request,
         'research/session_detail.html',
         context
+    )
+
+
+@login_required
+def generate_fact_check(request, session_id):
+
+    session = get_object_or_404(
+        ResearchSession,
+        id=session_id,
+        user=request.user
+    )
+
+    if session.research_content and not session.fact_check_report:
+
+        try:
+
+            result = fact_check_content(
+                session.research_content
+            )
+
+            session.fact_check_report = result["report"]
+
+            session.confidence_score = result["score"]
+
+            session.save()
+
+        except Exception as e:
+
+            print(f"Fact Check Error: {e}")
+
+    return redirect(
+        'session_detail',
+        session_id=session.id
     )
 
 

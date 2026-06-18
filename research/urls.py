@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, generate_research, session_detail, delete_session
+from .views import home, generate_research, session_detail, delete_session, generate_fact_check
 
 urlpatterns = [
     path('', home, name='home'),
@@ -20,5 +20,11 @@ urlpatterns = [
         'delete-session/<int:session_id>/',
         delete_session,
         name='delete_session'
+    ),
+    
+    path(
+        'generate-fact-check/<int:session_id>/',
+        generate_fact_check,
+        name='generate_fact_check'
     ),
 ]
