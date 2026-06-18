@@ -50,9 +50,27 @@ def dashboard(request):
         user=request.user
     ).order_by('-created_at')
 
+    total_sessions = ResearchSession.objects.filter(
+        user=request.user
+    ).count()
+
+    completed_sessions = ResearchSession.objects.filter(
+        user=request.user,
+        status='completed'
+    ).count()
+
+    pending_sessions = ResearchSession.objects.filter(
+        user=request.user,
+        status='pending'
+    ).count()
+
     context = {
         'form': form,
-        'sessions': sessions
+        'sessions': sessions,
+
+        'total_sessions': total_sessions,
+        'completed_sessions': completed_sessions,
+        'pending_sessions': pending_sessions,
     }
 
     return render(
@@ -88,12 +106,10 @@ def generate_research(request, session_id):
         except Exception as e:
 
             session.research_content = (
-                f"Generation failed: {str(e)}"
+                f"Research generation failed.\n\nError:\n{str(e)}"
             )
 
             session.save()
-
-            print(f"Gemini Error: {e}")
 
     return redirect('home')
 
@@ -116,3 +132,17 @@ def session_detail(request, session_id):
         'research/session_detail.html',
         context
     )
+
+
+@login_required
+def delete_session(request, session_id):
+
+    session = get_object_or_404(
+        ResearchSession,
+        id=session_id,
+        user=request.user
+    )
+
+    session.delete()
+
+    return redirect('home')
