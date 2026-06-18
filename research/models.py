@@ -39,6 +39,11 @@ class ResearchSession(models.Model):
         null=True
     )
 
+    final_report = models.TextField(
+        blank=True,
+        null=True
+    )
+
     confidence_score = models.IntegerField(
         blank=True,
         null=True

@@ -77,4 +77,27 @@ Research Session
 
 {% endif %}
 
+<hr>
+
+<h4>
+    Final Report
+</h4>
+
+{% if session.final_report %}
+
+<pre class="bg-light p-3 rounded">
+{{ session.final_report }}
+</pre>
+
+{% else %}
+
+<a href="{% url 'generate_report' session.id %}"
+   class="btn btn-primary">
+
+    Generate Final Report
+
+</a>
+
+{% endif %}
+
 {% endblock %}
