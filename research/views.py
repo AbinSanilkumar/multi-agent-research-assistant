@@ -81,10 +81,17 @@ def generate_research(request, session_id):
             )
 
             session.research_content = content
+            session.status = "completed"
 
             session.save()
 
         except Exception as e:
+
+            session.research_content = (
+                f"Generation failed: {str(e)}"
+            )
+
+            session.save()
 
             print(f"Gemini Error: {e}")
 

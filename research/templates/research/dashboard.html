@@ -51,6 +51,20 @@ Dashboard
                     {{ session.created_at }}
                 </small>
 
+                {% if session.status == "completed" %}
+
+                <span class="badge bg-success">
+                    Completed
+                </span>
+
+                {% else %}
+
+                <span class="badge bg-warning text-dark">
+                    Pending
+                </span>
+
+                {% endif %}
+
                 <br><br>
 
                 <a href="{% url 'session_detail' session.id %}"
