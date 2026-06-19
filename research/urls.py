@@ -1,5 +1,13 @@
 from django.urls import path
-from .views import home, generate_research, session_detail, delete_session, generate_fact_check, generate_report
+from .views import (
+    home,
+    generate_research,
+    session_detail,
+    delete_session,
+    generate_fact_check,
+    generate_report,
+    download_report,   # ✅ new import
+)
 
 urlpatterns = [
     path('', home, name='home'),
@@ -32,5 +40,12 @@ urlpatterns = [
         'generate-report/<int:session_id>/',
         generate_report,
         name='generate_report'
+    ),
+
+    # ✅ new route for downloading PDF reports
+    path(
+        'download-report/<int:session_id>/',
+        download_report,
+        name='download_report'
     ),
 ]

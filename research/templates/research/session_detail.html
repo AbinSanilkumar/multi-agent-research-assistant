@@ -27,24 +27,16 @@ Research Session
 </h4>
 
 {% if session.research_content %}
-
 <pre class="bg-light p-3 rounded">
 {{ session.research_content }}
 </pre>
-
 {% else %}
-
 <p>
     Research content not generated yet.
 </p>
-
-<a href="{% url 'generate_research' session.id %}"
-   class="btn btn-success">
-
+<a href="{% url 'generate_research' session.id %}" class="btn btn-success">
     Generate Research
-
 </a>
-
 {% endif %}
 
 <hr>
@@ -54,27 +46,16 @@ Research Session
 </h4>
 
 {% if session.fact_check_report %}
-
 <div class="alert alert-success">
-
-    Confidence Score:
-    {{ session.confidence_score }}%
-
+    Confidence Score: {{ session.confidence_score }}%
 </div>
-
 <pre class="bg-light p-3 rounded">
 {{ session.fact_check_report }}
 </pre>
-
 {% else %}
-
-<a href="{% url 'generate_fact_check' session.id %}"
-   class="btn btn-warning">
-
+<a href="{% url 'generate_fact_check' session.id %}" class="btn btn-warning">
     Generate Fact Check
-
 </a>
-
 {% endif %}
 
 <hr>
@@ -84,20 +65,17 @@ Research Session
 </h4>
 
 {% if session.final_report %}
+<a href="{% url 'download_report' session.id %}" class="btn btn-success mb-3">
+    Download PDF
+</a>
 
 <pre class="bg-light p-3 rounded">
 {{ session.final_report }}
 </pre>
-
 {% else %}
-
-<a href="{% url 'generate_report' session.id %}"
-   class="btn btn-primary">
-
+<a href="{% url 'generate_report' session.id %}" class="btn btn-primary">
     Generate Final Report
-
 </a>
-
 {% endif %}
 
 {% endblock %}
