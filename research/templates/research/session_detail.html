@@ -6,76 +6,139 @@ Research Session
 
 {% block content %}
 
-<h2>
-    {{ session.topic }}
-</h2>
+<!-- Header Card -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
 
-<hr>
+        <div class="d-flex justify-content-between align-items-center">
 
-<h4>
-    Research Plan
-</h4>
+            <div>
+                <h2 class="mb-1">
+                    {{ session.topic }}
+                </h2>
 
-<pre class="bg-light p-3 rounded">
-{{ session.plan }}
-</pre>
+                <small class="text-muted">
+                    Created on {{ session.created_at }}
+                </small>
+            </div>
 
-<hr>
+            {% if session.confidence_score %}
+            <div>
+                <span class="badge bg-success fs-6">
+                    Confidence Score: {{ session.confidence_score }}%
+                </span>
+            </div>
+            {% endif %}
 
-<h4>
-    Research Content
-</h4>
+        </div>
 
-{% if session.research_content %}
-<pre class="bg-light p-3 rounded">
-{{ session.research_content }}
-</pre>
-{% else %}
-<p>
-    Research content not generated yet.
-</p>
-<a href="{% url 'generate_research' session.id %}" class="btn btn-success">
-    Generate Research
-</a>
-{% endif %}
-
-<hr>
-
-<h4>
-    Fact Check
-</h4>
-
-{% if session.fact_check_report %}
-<div class="alert alert-success">
-    Confidence Score: {{ session.confidence_score }}%
+    </div>
 </div>
-<pre class="bg-light p-3 rounded">
-{{ session.fact_check_report }}
-</pre>
-{% else %}
-<a href="{% url 'generate_fact_check' session.id %}" class="btn btn-warning">
-    Generate Fact Check
-</a>
-{% endif %}
 
-<hr>
+<!-- Workflow Progress -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">
+        Workflow Progress
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
 
-<h4>
-    Final Report
-</h4>
+            <div class="col">
+                <div class="badge bg-success p-2">
+                    Planner
+                </div>
+            </div>
 
-{% if session.final_report %}
-<a href="{% url 'download_report' session.id %}" class="btn btn-success mb-3">
-    Download PDF
-</a>
+            <div class="col">
+                {% if session.research_content %}
+                    <div class="badge bg-success p-2">Research</div>
+                {% else %}
+                    <div class="badge bg-secondary p-2">Research</div>
+                {% endif %}
+            </div>
 
-<pre class="bg-light p-3 rounded">
-{{ session.final_report }}
-</pre>
-{% else %}
-<a href="{% url 'generate_report' session.id %}" class="btn btn-primary">
-    Generate Final Report
-</a>
-{% endif %}
+            <div class="col">
+                {% if session.fact_check_report %}
+                    <div class="badge bg-success p-2">Fact Check</div>
+                {% else %}
+                    <div class="badge bg-secondary p-2">Fact Check</div>
+                {% endif %}
+            </div>
+
+            <div class="col">
+                {% if session.final_report %}
+                    <div class="badge bg-success p-2">Report</div>
+                {% else %}
+                    <div class="badge bg-secondary p-2">Report</div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Research Plan -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">
+        Research Plan
+    </div>
+    <div class="card-body">
+        <pre>{{ session.plan }}</pre>
+    </div>
+</div>
+
+<!-- Research Content -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">
+        Research Content
+    </div>
+    <div class="card-body">
+        {% if session.research_content %}
+            <pre>{{ session.research_content }}</pre>
+        {% else %}
+            <p>Research content not generated yet.</p>
+            <a href="{% url 'generate_research' session.id %}" class="btn btn-success">
+                Generate Research
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Fact Check -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">
+        Fact Check
+    </div>
+    <div class="card-body">
+        {% if session.fact_check_report %}
+            <pre>{{ session.fact_check_report }}</pre>
+        {% else %}
+            <a href="{% url 'generate_fact_check' session.id %}" class="btn btn-warning">
+                Generate Fact Check
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Final Report -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">
+        Final Report
+    </div>
+    <div class="card-body">
+        {% if session.final_report %}
+            <a href="{% url 'download_report' session.id %}" class="btn btn-success mb-3">
+                Download PDF
+            </a>
+            <div class="bg-light p-4 rounded">
+                <pre class="mb-0">{{ session.final_report }}</pre>
+            </div>
+        {% else %}
+            <a href="{% url 'generate_report' session.id %}" class="btn btn-primary">
+                Generate Final Report
+            </a>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
