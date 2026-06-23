@@ -251,7 +251,7 @@ Context-Aware Research
 
 ## Author
 
-Abin Sanil Kumar
+Abin 
 
 Final Year AIML Student
 
